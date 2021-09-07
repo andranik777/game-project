@@ -1,0 +1,113 @@
+<div class="filters">
+    <mat-form-field >
+      <mat-label>Sort</mat-label>
+      <mat-select
+        panelClass="sort-select"
+        [(ngModel)]="sort"
+        (selectionChange)="searchGames(page,sort,platform,mySearch)"
+      >
+        <mat-option value="name">Name</mat-option>
+        <mat-option value="-released">Released</mat-option>
+        <mat-option value="-added">Added</mat-option>
+        <mat-option value="-created">Created</mat-option>
+        <mat-option value="-updated">Updated</mat-option>
+        <mat-option value="-rating">Rating</mat-option>
+        <mat-option value="metacritic">Metacritic</mat-option>
+      </mat-select>
+    </mat-form-field>
+
+  <mat-form-field style="margin-left: 2rem">
+    <mat-label>Platform</mat-label>
+  <mat-select [(ngModel)]="platform" style="width: 10rem"  name="platform" (ngModelChange)="searchGames(page,sort,platform,mySearch)" >
+    <mat-option value="1" >PC </mat-option>
+    <mat-option value="2">PlayStation</mat-option>
+    <mat-option value="3">Xbox</mat-option>
+    <mat-option value="4">iOS</mat-option>
+    <mat-option value="5">mac</mat-option>
+    <mat-option value="6">Linux</mat-option>
+    <mat-option value="7">Nintendo</mat-option>
+    <mat-option value="8">Android</mat-option>
+    <mat-option value="9">Atari</mat-option>
+    <mat-option value="10">Commodore / Amiga</mat-option>
+  </mat-select>
+  </mat-form-field>
+
+
+</div>
+
+  <div class="games"  *ngIf="games" >
+    <ng-container *ngFor="let game of games let index = index"  >
+      <div class="game" (mouseenter)="myfunction(index); $event.stopPropagation()" (mouseleave)="myfunction(''); $event.stopPropagation();"  >
+        <div class="game-thumb-container">
+          <div *ngIf="game.background_image">
+            <mat-carousel
+              timings="250ms ease-in"
+              [autoplay]="false"
+              interval="5000"
+              color="accent"
+              maxWidth="auto"
+              proportion="75"
+              slides="5"
+              [loop]="true"
+              [hideArrows]="false"
+              [hideIndicators]="false"
+              [useKeyboard]="true"
+              [useMouseWheel]="false"
+              orientation="ltr"
+            >
+              <mat-carousel-slide
+                #matCarouselSlide
+                *ngFor="let slide of game.short_screenshots; let i = index"
+                [image]="slide.image"
+                overlayColor="#00000040"
+                [hideOverlay]="false"
+              ></mat-carousel-slide>
+            </mat-carousel>
+          </div>
+        <p *ngIf="!game.background_image">No image</p>
+        </div>
+        <div class="game-description " (click)="openGameDetails(game?.id)">
+          <div class="game-info" >
+          <p class="game-name">{{ game.name }}</p>
+            <div class="game-platforms">
+              <img
+               *ngFor="let gamePlatform of game.parent_platforms"
+                class="game-platform"
+                src="assets/images/platforms/{{ gamePlatform.platform?.slug }}.svg"
+                alt="{{ gamePlatform.platform?.slug }}"
+              />
+            </div>
+          </div>
+            <div  *ngIf="display == index+'a'" [class.heighti]="display == index+'a'">
+              <div class="list-item">Release date: {{game.released | date}}</div>
+                <div class="list-item">Genres:
+                  <span *ngFor="let genre of game.genres">
+                    {{genre.name}}
+                  </span>
+                </div>
+                <div class="list-item" *ngIf="game?.rating">Rating: {{game?.rating}}/5</div>
+              <div class="list-item">
+                <button (click)="openGameDetails(game?.id)" class="fill">See Details</button>
+
+              </div>
+              </div>
+        </div>
+      </div>
+    </ng-container>
+    <button class="up m-center" (click)="change_page(page);moreGame(page,sort,platform,mySearch)" (change)="changement(page)" name="page"  value="{{page}}" *ngIf="games?.length >=10" >Show more</button>
+
+  </div>
+
+<section class="m-center"  fxLayout="column" fxLayoutAlign="center center" *ngIf="games?.length == 0">
+  <p class="game-name">The page you are trying to access doesn't exist or  is currently unavailable
+    <a routerLink="/">Go Home</a>
+  </p>
+<img src="assets/images/404-not-found-error.jpg">
+</section>
+
+
+<div *ngIf="!games" class="loading">
+  <mat-spinner></mat-spinner>
+  <p>Loading...</p>
+</div>
+

@@ -1,0 +1,258 @@
+.filters {
+    max-width: 1200px;
+    margin: 20px auto;
+    padding-left: 20px;
+    display: flex;
+    justify-content: flex-start;
+  }
+
+  ::ng-deep {
+    .mat-form-field-infix {
+      background-color: #3f51b5;
+    }
+
+    .mat-select-value,
+    .mat-select-arrow,
+    .mat-form-field-hide-placeholder .mat-select-placeholder,
+    .mat-form-field-appearance-legacy .mat-form-field-label {
+      color: #fff !important;
+      opacity: 1;
+    }
+
+    .mat-form-field-infix {
+      border-color: #fff !important;
+      border-top: none;
+      padding-left: 5px !important;
+    }
+
+    .mat-form-field-appearance-legacy .mat-form-field-label {
+      padding-left: 5px;
+    }
+
+    .mat-form-field-appearance-legacy .mat-form-field-underline {
+      background-color: #fff !important;
+    }
+  }
+
+  .games {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: flex-start;
+    max-width: 1200px;
+    margin: 20px auto;
+  }
+
+
+  .game {
+  width: 280px;
+  margin: 10px;
+  height: 330px;
+  overflow: hidden;
+  border-radius: 5px;
+  background-color: #202020;
+  box-shadow: 4px 3px 8px 0px rgba(36, 34, 34, 0.22);
+  transition-duration: 0.3s;
+  cursor: pointer;
+
+  &:hover {
+    box-shadow: 4px 3px 8px 0px rgba(145, 130, 49, 0.22);
+    /*transform: translateY(-3px);*/
+  }
+    &-info {
+      justify-content: center;
+      display: flex;
+      flex-direction: column;
+      align-items: flex-start;
+      margin-top: 1.5rem;
+      margin-left: 10px;
+    }
+
+
+  &-thumb-container {
+    background-color: #000;
+    position: relative;
+    height: 172px;
+    color: #fff;
+    text-align: center;
+  }
+    &-text-content{
+      color: white;
+    }
+
+  &-thumbnail {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    margin: 0 auto;
+    height: 172px;
+  }
+
+  &-description {
+    height: 157px;
+    box-sizing: border-box;
+    margin-top: 3.5rem;
+  }
+
+  &-name {
+    color: #fff;
+    font-weight: 700;
+    font-size: 22px;
+    margin-bottom: 20px;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+    overflow: hidden;
+  }
+
+  &-platforms {
+    display: flex;
+    flex-flow: row wrap;
+  }
+
+  &-platform {
+    width: 20px;
+    margin-right: 10px;
+    color: white;
+    font-weight: 700;
+  }
+}
+  .heighti {
+    position: absolute;
+    background-color: #151515;
+    color: white;
+    width: 17.5rem;
+    margin-top: 1rem;
+    height: 8rem;
+    z-index: 2;
+    box-shadow: 4px 3px 8px 0px rgba(145, 130, 49, 0.22);
+
+  }
+
+.list-item {
+  position: relative;
+  display: block;
+  padding: .5rem 1rem;
+  color: white;
+  text-decoration: none;
+  background-color: #202020;
+  border: 1px solid rgba(0,0,0,.125);
+  text-align: center;
+
+
+}
+
+
+
+//////
+
+
+
+.fill:hover,
+.fill:focus {
+  box-shadow: inset 0 0 0 2em #3f51b5;
+}
+
+// Animate the size, outside
+.pulse:hover,
+.pulse:focus {
+  animation: pulse 1s;
+  box-shadow: 0 0 0 2em rgba(#fff,0);
+}
+
+@keyframes pulse {
+  0% { box-shadow: 0 0 0 0 var(--hover); }
+}
+
+// Stack multiple shadows, one from the left, the other from the right
+.close:hover,
+.close:focus {
+  box-shadow:
+    inset -3.5em 0 0 0 var(--hover),
+    inset 3.5em 0 0 0 var(--hover);
+}
+
+// Size can also be negative; see how it's smaller than the element
+.raise:hover,
+.raise:focus {
+  box-shadow: 0 0.5em 0.5em -0.4em var(--hover);
+  transform: translateY(-0.25em);
+}
+
+// Animating from the bottom
+.up:hover,
+.up:focus {
+  box-shadow: inset 0 -3.25em 0 0 var(--hover);
+}
+
+// And from the left
+.slide:hover,
+.slide:focus {
+  box-shadow: inset 6.5em 0 0 0 var(--hover);
+}
+
+// Multiple shadows, one on the outside, another on the inside
+.offset {
+  box-shadow:
+    0.3em 0.3em 0 0 var(--color),
+    inset 0.3em 0.3em 0 0 var(--color);
+
+  &:hover,
+  &:focus {
+    box-shadow:
+      0 0 0 0 var(--hover),
+      inset 6em 3.5em 0 0 var(--hover);
+  }
+}
+
+//=== Set button colors
+// If you wonder why use Sass vars or CSS custom properties...
+// Make a map with the class names and matching colors
+$colors: (
+  fill: #3f51b5,
+  pulse: #ef6eae,
+  close: #ff7f82,
+  raise: #ffa260,
+  up: #e4cb58,
+  slide: #8fc866,
+  offset: #19bc8b
+);
+
+// Sass variables compile to a static string; CSS variables are dynamic and inherited
+// Loop through the map and set CSS custom properties using Sass variables
+@each $button, $color in $colors {
+  .#{$button} {
+    --color: #{$color};
+    --hover: #{adjust-hue($color, 45deg)};
+  }
+}
+
+// Now every button will have different colors as set above. We get to use the same structure, only changing the custom properties.
+button {
+  color: var(--color);
+  transition: 0.25s;
+
+  &:hover,
+  &:focus {
+    border-color: #3f51b5;
+    color: #fff;
+    cursor: pointer;
+  }
+}
+
+//=== Pen styling, ignore
+
+
+// Basic button styles
+button {
+  background: none;
+  border: 2px solid;
+  font: inherit;
+  line-height: 1;
+  margin: 0.5em;
+  padding: 1em 2em;
+}
+
+.m-center {
+  margin: 1rem auto;
+}
+

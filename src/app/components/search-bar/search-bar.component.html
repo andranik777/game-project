@@ -1,0 +1,16 @@
+<div class="search-container">
+    <form class="search-form" #form="ngForm" (ngSubmit)="onSubmit(search)"  style="display: flex;align-items: center">
+     <a routerLink="/"> <img src="assets/images/logo.gif" style="width: 3.5rem; margin-top: 0.3rem"></a>
+      <span class="logo" routerLink="/">GAMEXAX</span>
+      <input
+        [(ngModel)]="search"
+        (focusout)="onSubmit(search)"
+
+        class="search-input"
+        name="search"
+        ngModel
+        placeholder="Search 500,000+ games"
+      />
+      <button class="search-button">Search</button>
+    </form>
+  </div>
